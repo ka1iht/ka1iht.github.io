@@ -107,7 +107,12 @@ body {
 header, #content, footer { 
   background: rgba(0,0,0,.8); 
   padding:25px;
-  color:#FFFFFF; 
+  color:#FFFFFF;
+}
+header {
+  background: linear-gradient(to right, rgba(128,128,128,0.8), rgba(64,64,64,0.8));
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 iframe {
   max-width:100%;
