@@ -139,9 +139,93 @@ ul.main-menu li a.active {
 /* Utility classes */
 .hide {
   display:none;
+  opacity: 0;
+  pointer-events: auto;
+  transition: opacity 0.5s ease;
 }
 .show {
   display:block;
+  opacity: 1;
+  pointer-events: auto;
 }
 
+/* Enhanced responsiveness */
+@media (max-width: 768px) {
+  body {
+    margin: 10px;
+    font-size: 1.3em; /* Slightly smaller text on mobile */
+  }
+  header, #content, footer {
+    padding: 15px; /* Less padding on small screens */
+  }
+  ul.main-menu {
+    justify-content: center; /* Center menu on mobile */
+  }
+  ul.main-menu li a {
+    margin-right: 10px;
+    font-size: 1.5rem; /* Smaller menu text */
+  }
+  h1 { font-size: 2.8rem; } /* Scale down headings */
+  h2 { font-size: 2.4rem; }
+}
 
+@media (max-width: 480px) {
+  ul.main-menu {
+    flex-direction: column; /* Stack menu vertically on very small screens */
+    align-items: center;
+  }
+  ul.main-menu li {
+    margin-bottom: 10px;
+  }
+}
+
+/* Smooth transitions for menu and content */
+ul.main-menu li a {
+  transition: color 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+.content-region {
+  transition: opacity 0.5s ease-in-out; /* Fade in/out effect */
+  opacity: 0;
+}
+.content-region.show { /* Assuming you add 'show' class via JS instead of just show() */
+  opacity: 1;
+}
+
+footer {
+  text-align: center;
+  background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(239, 109, 61, 0.2)); /* Subtle gradient */
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+footer a {
+  color: #EF6D3D;
+}
+
+/* Better content spacing and shadows */
+#content {
+  border-radius: 8px; /* Rounded corners for modern look */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+.content-region {
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.content-region h2 {
+  border-bottom: 2px solid #EF6D3D; /* Accent line under headings */
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Placeholder styling for WIP sections */
+.content-region p:contains("Work in progress!") {
+  font-style: italic;
+  color: #cfd2da;
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05); /* Light overlay */
+  border-radius: 8px;
+}
