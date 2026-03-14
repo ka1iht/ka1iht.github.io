@@ -108,9 +108,10 @@ header, #content, footer {
   background: rgba(0,0,0,.8); 
   padding:25px;
   color:#FFFFFF;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 header {
-  background: linear-gradient(to right, rgba(128,128,128,0.8), rgba(64,64,64,0.8));
+  background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
   border-radius: 8px;
   margin-bottom: 20px;
 }
@@ -199,7 +200,7 @@ ul.main-menu li a {
 
 footer {
   text-align: center;
-  background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(239, 109, 61, 0.2)); /* Subtle gradient */
+  background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
   margin-top: 20px;
   border-radius: 8px;
 }
