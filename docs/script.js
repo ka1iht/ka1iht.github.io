@@ -11,10 +11,10 @@
     
     // Remove any active classes on the main-menu
     $('.main-menu a').removeClass('active');
-    var region = location.hash || $('.main-menu a:first').attr('href');
+    var region = location.hash.toString() || $('.main-menu a:first').attr('href');
     
     // Now show the region specified in the URL hash
-    $(region).addClass('show');
+    $(region).show();
     
     // Highlight the menu link associated with this region by adding the .active CSS class
     $('.main-menu a[href="'+ region +'"]').addClass('active'); 
