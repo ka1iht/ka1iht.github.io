@@ -1,29 +1,61 @@
-// Wait for the document to load before running the script 
-(function ($) {
-  
-  // We use some Javascript and the URL #fragment to hide/show different parts of the page
-  // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Linking_to_an_element_on_the_same_page
-  $(window).on('load hashchange', function(){
-    
-    // First hide all content regions, then show the content-region specified in the URL hash 
-    // (or if no hash URL is found, default to first menu item)
-    $('.content-region').removeClass('show').addClass('hide');
-    
-    // Remove any active classes on the main-menu
-    $('.main-menu a').removeClass('active');
-    var region = location.hash.toString() || $('.main-menu a:first').attr('href');
-    
-    // Now show the region specified in the URL hash
-    $(region).removeClass('hide').addClass('show');
-    
-    // Highlight the menu link associated with this region by adding the .active CSS class
-    $('.main-menu a[href="'+ region +'"]').addClass('active'); 
+(function () {
+  'use strict';
 
-    // Alternate method: Use AJAX to load the contents of an external file into a div based on URL fragment
-    // This will extract the region name from URL hash, and then load [region].html into the main #content div
-    // var region = location.hash.toString() || '#first';
-    // $('#content').load(region.slice(1) + '.html')
-    
+  const storageKey = 'theme-preference';
+  const root = document.documentElement;
+  const picker = document.querySelector('.theme-picker');
+  const options = document.querySelectorAll('[data-theme-value]');
+  const labels = document.querySelectorAll('[data-theme-label]');
+  const themeNames = { system: 'System', light: 'Light', dark: 'Dark' };
+
+  function savedTheme() {
+    try {
+      const value = localStorage.getItem(storageKey);
+      return themeNames[value] ? value : 'system';
+    } catch (error) {
+      return 'system';
+    }
+  }
+
+  function applyTheme(theme, save) {
+    const chosenTheme = themeNames[theme] ? theme : 'system';
+    root.dataset.theme = chosenTheme;
+
+    options.forEach(function (option) {
+      option.setAttribute('aria-pressed', String(option.dataset.themeValue === chosenTheme));
+    });
+    labels.forEach(function (label) {
+      label.textContent = themeNames[chosenTheme];
+    });
+
+    if (save) {
+      try {
+        localStorage.setItem(storageKey, chosenTheme);
+      } catch (error) {
+        // The theme still works for this visit if storage is unavailable.
+      }
+    }
+  }
+
+  applyTheme(savedTheme(), false);
+
+  options.forEach(function (option) {
+    option.addEventListener('click', function () {
+      applyTheme(option.dataset.themeValue, true);
+      picker.removeAttribute('open');
+    });
   });
-  
-})(jQuery);
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && picker.open) {
+      picker.removeAttribute('open');
+      picker.querySelector('summary').focus();
+    }
+  });
+
+  window.addEventListener('storage', function (event) {
+    if (event.key === storageKey) applyTheme(savedTheme(), false);
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+}());
